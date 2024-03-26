@@ -20,6 +20,7 @@ import {
 } from "../data/lookupHardcode";
 import FileUpload from "./components/FileUpload";
 import { callCamundaWebhook } from "../data/callCamundaWebhook";
+import { uploadFileToS3 } from "./functions/apis";
 
 import {
   generateCardNumber,
@@ -28,7 +29,6 @@ import {
 } from "./functions/builders";
 
 const App = () => {
-
   const formRef = useRef(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -115,23 +115,47 @@ const App = () => {
 
   const handleSubmit = async () => {
     event.preventDefault();
+
     if (formRef.current.checkValidity()) {
-      const customerData = createCustomerData(userInputs, today);
-      console.log(customerData);
-      const proofOfAddress = await convertFileToBase64(
-        userInputs.proofOfAddress
+      const POAName =
+        "Proof_of_Address-" +
+        userInputs.firstName +
+        "_" +
+        userInputs.lastName +
+        "-" +
+        today.toLocaleDateString("en-GB").replace(/\//g, "-") +
+        ".pdf";
+
+      const POIName =
+        "Proof_of_Income-" +
+        userInputs.firstName +
+        "_" +
+        userInputs.lastName +
+        "-" +
+        today.toLocaleDateString("en-GB").replace(/\//g, "-") +
+        ".pdf";
+
+      const POA_Result = await uploadFileToS3(
+        userInputs.proofOfAddress,
+        POAName
       );
-      const proofOfIncome = {};
+      const POI_Result = await uploadFileToS3(
+        userInputs.proofOfIncome,
+        POIName
+      );
+      const POAUrl = POA_Result.objecturl;
+      const POIUrl = POI_Result.objecturl;
+
+      const customerData = createCustomerData(userInputs, POIName, POIUrl, POAName, POAUrl);
+      console.log(customerData);
       const submissionData = {
         customerData: customerData,
-        proofOfAddress: "Proof of Address",
-        proofOfIncome: "Proof of Income",
       };
       callCamundaWebhook(submissionData);
       setFormSubmitted(true);
     } else {
       console.log("fill in required fields");
-      formRef.current.reportValidity(); // Force browser to show errors
+      formRef.current.reportValidity();
     }
   };
   return (
@@ -277,10 +301,10 @@ const App = () => {
               fieldName="proofOfIncome"
               instructions={proofOfIncomeInstructions}
             />
-            <div class="button-container">
-            <button type="submit" onClick={handleSubmit}>
-              Submit
-            </button>
+            <div className="button-container">
+              <button type="submit" onClick={handleSubmit}>
+                Submit
+              </button>
             </div>
           </div>
         </form>

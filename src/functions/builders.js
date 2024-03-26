@@ -27,8 +27,9 @@ export function generateSortCode(region) {
   return `${prefix}-${segment1}-${segment2}`;
 }
 
-export function createCustomerData(data) {
+export function createCustomerData(data, POIName, POIUrl, POAName, POAUrl) {
   const today = new Date();
+
   const createCaseData = (data, today) => {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1); // Calculate tomorrow's date
@@ -39,6 +40,28 @@ export function createCustomerData(data) {
       loanAmount: data.loanAmount.currency + " " + data.loanAmount.amount,
       renewalFrequency: "Daily",
       nextRenewalDate: formatDate(tomorrow),
+      caseSupportingDocument:[
+        {
+          fk_documentTypeID: 1,
+          documentName: POIName,
+          documentBase64OrURL: POIUrl,
+          fk_createdByUserID: 1,
+          createdOn: formatDate(today),
+          fk_modifiedByUserID: 1,
+          modifiedOn: formatDate(today),
+          isActive: true,
+        },
+        {
+          fk_documentTypeID: 2,
+          documentName: POAName,
+          documentBase64OrURL: POAUrl,
+          fk_createdByUserID: 1,
+          createdOn: formatDate(today),
+          fk_modifiedByUserID: 1,
+          modifiedOn: formatDate(today),
+          isActive: true,
+        }
+      ],
       fk_createdByUserID: 1,
       createdOn: formatDate(today),
       fk_modifiedByUserID: 1,
