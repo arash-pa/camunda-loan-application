@@ -12,7 +12,7 @@ export async function callCamundaWebhook(data) {
 
   try {
     const response = await fetch(
-      "https://gj0dobamcb.execute-api.eu-west-2.amazonaws.com/camunda/webhook",
+      "https://gj0dobamcb.execute-api.eu-west-2.amazonaws.com/camunda/newWebhook",
       requestOptions
     );
     const result = await response.text();
