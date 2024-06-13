@@ -1,10 +1,3 @@
 {
-  "aws_project_region": "eu-west-2",
-  "aws_cloud_logic_custom": [
-    {
-      "name": "getAppianLookups",
-      "endpoint": "https://bpklz2i360.execute-api.eu-west-2.amazonaws.com/staging",
-      "region": "eu-west-2"
-    }
-  ]
+  "aws_project_region": "eu-west-2"
 }

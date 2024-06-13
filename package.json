@@ -7,11 +7,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-amplify/cli": "^12.10.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.13",
     "@mui/material": "^5.15.14",
-    "aws-amplify": "^6.0.19",
+    "0g": "^0.0.9",
+    "amplify": "^0.0.11",
+    "aws-amplify": "^6.0.21",
     "libphonenumber-js": "^1.10.57",
     "react": "^18.0.0",
     "react-bootstrap": "^2.10.1",
