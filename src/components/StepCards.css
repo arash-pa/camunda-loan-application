@@ -1,0 +1,41 @@
+.step-cards-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-around; /* Evenly space the cards */
+    align-items: center; /* Vertically align the cards */
+    margin-bottom: 50px; /* Add bottom margin as needed */
+    margin-top: 25px;
+  }
+  
+  .step-card {
+    width: 60px; /* Adjust size as needed */
+    height: 60px;
+    border-radius: 50%; /* Make circular */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  }
+  
+  .step-card-image {
+    width: 50px; /* Adjust image size as needed */
+    height: 50px;
+    object-fit: cover;
+  }
+  
+  .step-card-content {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .step-card.active {
+    background-color: #007bff; /* Active card color */
+    color: white;
+  }
+
+  .step-card.completed {
+    background-color: green; /* Green for completed steps */
+    color: white; /* Optional: White text for better contrast */
+  }

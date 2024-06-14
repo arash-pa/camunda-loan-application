@@ -90,11 +90,18 @@
   align-items: flex-end; /* Align to the right */
   padding: 1rem;
 }
+.form-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  background-color: #fff;
+  padding-top: 10px;
+  margin-top: 75px;
+  border-radius: 5px;
+}
 
 .form-container {
   display: flex; /* Use flexbox for column layout */
   gap: 20px; /* Spacing between columns */
-  padding-top: 75px;
 }
 
 .form-column {
@@ -114,6 +121,20 @@
   left: -10px; /* Adjust as needed to align with column edge */
   border-left: 1px solid #ccc; /* Style the divider line */
 }
+
+.wizard-wrapper {
+  padding: 15px;
+}
+
+.wizard-navigation {
+  display: flex;             /* Enable flexbox for the button container */
+  justify-content: space-between; /* Push buttons to opposite ends */
+  align-items: center;      /* Vertically align buttons in the center */
+  width: 100%;              /* Optional: Ensure the container spans the full width */
+  margin-top: auto;         /* Push buttons to the bottom of the parent */
+  gap: 10px;
+}
+
 
 .input-line {
   display: flex; /* Use flexbox for easy alignment */

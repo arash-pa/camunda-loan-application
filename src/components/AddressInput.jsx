@@ -6,13 +6,19 @@ import "./AddressInput.css";
 
 const AddressInput = ({ value, onChange }) => {
   const [address, setAddress] = useState(value);
+  console.log("ADDRESS")
+  console.log(value)
   const [countries, setCountries] = useState([]);
   const [regions, setRegions] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(value.country);
+  const [selectedRegion, setSelectedRegion] = useState(value.region);
 
   useEffect(() => {
     setCountries(europeanCountries);
+  }, []);
+
+  useEffect(() => {
+    setRegions(countryRegions[value.country]);
   }, []);
 
   const handleRegionChange = (event) => {
@@ -26,6 +32,7 @@ const AddressInput = ({ value, onChange }) => {
 
   const handleCountryChange = (event) => {
     const countryCode = event.target.value;
+    console.log(countryCode)
     setSelectedCountry(countryCode);
     setRegions(countryRegions[countryCode] || []); // Update regions
 

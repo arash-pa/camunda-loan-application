@@ -11,7 +11,7 @@ const DateInput = ({
   onChange,
   errorMessage,
 }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(date);
   const [validationError, setValidationError] = useState("");
 
   const isValidDate = (date) => {

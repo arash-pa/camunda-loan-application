@@ -81,7 +81,7 @@ export function createCustomerData(data, POIName, POIUrl, POAName, POAUrl) {
 
   return {
     case: createCaseData(data, today),
-    customerPaymentDetail: createPaymentDetails(data),
+    customerPaymentDetail: data.paymentDetails,
     firstName: data.firstName,
     lastName: data.lastName,
     dateOfBirth: formatDate(data.dateOfBirth),

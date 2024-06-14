@@ -13,6 +13,8 @@ import EmailInput from "./components/EmailInput";
 import DropdownInput from "./components/DropdownInput";
 import DateInput from "./components/DateInput";
 import CurrencyInput from "./components/CurrencyInput";
+import WizardButtons from "./components/WizardButtons";
+import StepCards from "./components/StepCards";
 import {
   employmentTypeLookup,
   housingStatusLookup,
@@ -28,47 +30,73 @@ import {
   createCustomerData,
 } from "./functions/builders";
 
+import contact from './assets/contact.png';
+import address from './assets/address.png';
+import payment from './assets/payment.png';
+import documents from './assets/documents.png';
+
 const App = () => {
   const formRef = useRef(null);
+  const [currentStep, setCurrentStep] = useState(1);
+  const steps = [
+    {
+      image: contact,
+      title: 'Contact Information',
+      description:
+        "The customer's personal contact information",
+    },
+    {
+      image: address,
+      title: 'Address',
+      description:
+        "The customer's address",
+    },
+    {
+      image: payment,
+      title: 'Payment Details',
+      description:
+        "The customer's payment details",
+    },
+    {
+      image: documents,
+      title: 'Documents',
+      description:
+        "The customer's address and income proof documents",
+    },
+  ];
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userInputs, setUserInputs] = useState({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    emailAddress: "",
-    phone: "",
-    employmentType: "",
-    housingStatus: "",
-    address: {
-      addressLine1: "",
-      addressLine2: "",
-      country: "",
-      city: "",
-      region: "",
-      postCode: "",
+    firstName: "Leif",
+    lastName: "Thracia",
+    dateOfBirth: new Date("1999-09-01T00:00:00Z"),
+    paymentDetails: {
+      nameOnCard: "Leif Thracia",
+      cardNumber: "7246-5762-5958-0403",
+      sortCode: "30-45-04",
+      isActive: true,
     },
-    addressFull: "",
+    emailAddress: "arash.parsanejad@vasscompany.com",
+    phone: "+447000000000",
+    employmentType: "Full-Time",
+    housingStatus: "Private Rental",
+    address: {
+      addressLine1: "5 Merchant Square",
+      addressLine2: "",
+      country: "United Kingdom",
+      city: "London",
+      region: "England",
+      postCode: "W2 1BQ",
+    },
+    addressFull: "5 Merchant Square, London, England, GB, W2 1BQ",
     proofOfIncome: null,
     proofOfAddress: null,
-    loanType: {
-      id: "",
-      name: "",
-    },
+    loanType: "Personal",
     loanAmount: {
       currency: "GBP",
-      amount: "",
+      amount: "499",
     },
   });
-
-  async function convertFileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  }
 
   const getFullAddress = () => {
     return `${userInputs.address.addressLine1}, ${userInputs.address.city}, ${userInputs.address.region}, ${userInputs.address.country}, ${userInputs.address.postCode}`;
@@ -79,6 +107,7 @@ const App = () => {
     setUserInputs({ ...userInputs, addressFull: fullAddress });
   }, [userInputs.address]); // Add userInputs.address as a dependency
   // Handle form changes (generic example)
+
   const handleChange = (event) => {
     setUserInputs({
       ...userInputs,
@@ -106,7 +135,7 @@ const App = () => {
   };
 
   const today = new Date();
-  console.log(today)
+  console.log(today);
 
   const eighteenYearsAgo = new Date();
   eighteenYearsAgo.setFullYear(today.getFullYear() - 18);
@@ -116,9 +145,9 @@ const App = () => {
 
   const handleSubmit = async () => {
     event.preventDefault();
-
+    console.log(userInputs);
     if (formRef.current.checkValidity()) {
-      setIsLoading(true)
+      setIsLoading(true);
       const POAName =
         "Proof_of_Address-" +
         userInputs.firstName +
@@ -148,13 +177,19 @@ const App = () => {
       const POAUrl = POA_Result.objecturl;
       const POIUrl = POI_Result.objecturl;
 
-      const customerData = createCustomerData(userInputs, POIName, POIUrl, POAName, POAUrl);
+      const customerData = createCustomerData(
+        userInputs,
+        POIName,
+        POIUrl,
+        POAName,
+        POAUrl
+      );
       console.log(customerData);
       const submissionData = {
         customerData: customerData,
       };
       callCamundaWebhook(submissionData);
-      setIsLoading(false)
+      setIsLoading(false);
       setFormSubmitted(true);
     } else {
       console.log("fill in required fields");
@@ -162,7 +197,7 @@ const App = () => {
     }
   };
   return (
-    <div className={isLoading ? 'loading-cursor' : ''}>
+    <div className={isLoading ? "loading-cursor" : ""}>
       <div>
         <header
           style={{
@@ -192,98 +227,108 @@ const App = () => {
       ) : (
         <form ref={formRef}>
           {" "}
-          <div className="form-container">
-            {/* Wrapper for layout */}
-            <div className="form-column">
-              {/* Column 1 */}
-              <TextInput
-                placeholder="Enter First Name"
-                label="First Name"
-                name="firstName"
-                value={userInputs.firstName}
-                onChange={handleChange}
-              />
-              <TextInput
-                placeholder="Enter Last Name(s)"
-                label="Last Name"
-                name="lastName"
-                value={userInputs.lastName}
-                onChange={handleChange}
-              />
-              <DateInput
-                label="Date of Birth"
-                name="dateOfBirth"
-                dateBefore={eighteenYearsAgo}
-                dateAfter={hundredYearsAgo}
-                date={userInputs.dateOfBirth}
-                errorMessage="Invalid date selection"
-                onChange={(date) =>
-                  setUserInputs({ ...userInputs, dateOfBirth: date })
-                }
-              />
-              <PhoneInputComponent
-                name="phone"
-                value={userInputs.phone}
-                onChange={handlePhoneChange}
-              />
-              <EmailInput
-                name="emailAddress"
-                label="Email"
-                value={userInputs.email}
-                onChange={handleChange}
-              />
-              <div className="input-line">
-                <DropdownInput
-                  label="Loan Type"
-                  name="loanType"
-                  value={userInputs.loanType || ""}
-                  options={loanTypeLookup}
+          <div className="form-wrapper">
+            <StepCards steps={steps} currentStep={currentStep} />
+            <hr></hr>
+            <div className="form-container">
+              {/* Wrapper for layout */}
+              <div className="form-column">
+                {/* Column 1 */}
+                <TextInput
+                  placeholder="Enter First Name"
+                  label="First Name"
+                  name="firstName"
+                  value={userInputs.firstName}
                   onChange={handleChange}
-                  idKey="loanTypeID"
-                  returnIdKey={true}
                 />
+                <TextInput
+                  placeholder="Enter Last Name(s)"
+                  label="Last Name"
+                  name="lastName"
+                  value={userInputs.lastName}
+                  onChange={handleChange}
+                />
+                <DateInput
+                  label="Date of Birth"
+                  name="dateOfBirth"
+                  dateBefore={eighteenYearsAgo}
+                  dateAfter={hundredYearsAgo}
+                  date={userInputs.dateOfBirth}
+                  errorMessage="Invalid date selection"
+                  onChange={(date) =>
+                    setUserInputs({ ...userInputs, dateOfBirth: date })
+                  }
+                />
+                <PhoneInputComponent
+                  name="phone"
+                  value={userInputs.phone}
+                  onChange={handlePhoneChange}
+                />
+                <EmailInput
+                  name="emailAddress"
+                  label="Email"
+                  value={userInputs.emailAddress}
+                  onChange={handleChange}
+                />
+                <div className="input-line">
+                  <DropdownInput
+                    label="Loan Type"
+                    name="loanType"
+                    value={userInputs.loanType || ""}
+                    options={loanTypeLookup}
+                    onChange={handleChange}
+                    idKey="loanTypeID"
+                    returnIdKey={true}
+                  />
+                </div>
+                <div className="input-line">
+                  <CurrencyInput
+                    name="loanAmount"
+                    label="Loan Amount"
+                    value={userInputs.loanAmount}
+                    onChange={handleCurrencyChange}
+                  />
+                </div>
               </div>
-              <div className="input-line">
-                <CurrencyInput
-                  name="loanAmount"
-                  label="Loan Amount"
-                  value={userInputs.loanAmount}
-                  onChange={handleCurrencyChange}
+              <div className="form-column">
+                {/* Column 2 */}
+                <AddressInput
+                  name="address"
+                  value={userInputs.address}
+                  onChange={(address) =>
+                    setUserInputs({ ...userInputs, address })
+                  }
                 />
+                <div className="input-line">
+                  <DropdownInput
+                    label="Employment Type"
+                    name="employmentType"
+                    value={userInputs.employmentType || ""}
+                    options={employmentTypeLookup}
+                    onChange={handleChange}
+                    idKey="employmentTypeID"
+                    returnIdKey={true}
+                  />
+                </div>
+                <div className="input-line">
+                  <DropdownInput
+                    label="Housing Status"
+                    name="housingStatus"
+                    value={userInputs.housingStatus || ""}
+                    options={housingStatusLookup}
+                    onChange={handleChange}
+                    idKey="housingStatusID"
+                    returnIdKey={true}
+                  />
+                </div>
               </div>
             </div>
-            <div className="form-column">
-              {/* Column 2 */}
-              <AddressInput
-                name="address"
-                value={userInputs.address}
-                onChange={(address) =>
-                  setUserInputs({ ...userInputs, address })
-                }
-              />
-              <div className="input-line">
-                <DropdownInput
-                  label="Employment Type"
-                  name="employmentType"
-                  value={userInputs.employmentType || ""}
-                  options={employmentTypeLookup}
-                  onChange={handleChange}
-                  idKey="employmentTypeID"
-                  returnIdKey={true}
-                />
-              </div>
-              <div className="input-line">
-                <DropdownInput
-                  label="Housing Status"
-                  name="housingStatus"
-                  value={userInputs.housingStatus || ""}
-                  options={housingStatusLookup}
-                  onChange={handleChange}
-                  idKey="housingStatusID"
-                  returnIdKey={true}
-                />
-              </div>
-            </div>
+            <WizardButtons
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              steps={steps}
+              handleSubmit={handleSubmit}
+            />
           </div>
           <div>
             <hr></hr>
@@ -305,7 +350,7 @@ const App = () => {
               instructions={proofOfIncomeInstructions}
             />
             <div className="button-container">
-              <button type="submit" onClick={handleSubmit} >
+              <button type="submit" onClick={handleSubmit}>
                 Submit
               </button>
             </div>

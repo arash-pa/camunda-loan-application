@@ -1,17 +1,17 @@
 export const europeanCountries = [
-    { code: 'GB', name: 'United Kingdom' },
-    { code: 'IE', name: 'Ireland' },
-    { code: 'FR', name: 'France' },
-    { code: 'DE', name: 'Germany' },
-    { code: 'ES', name: 'Spain' },
+    'United Kingdom',
+    'Ireland',
+    'France',
+    'Germany',
+    'Spain',
   ];
 
 export const countryRegions = {
-    GB: ['England', 'Scotland', 'Wales', 'Northern Ireland'],
-    IE: ['Leinster', 'Munster', 'Connacht', 'Ulster'],
-    FR: ['Île-de-France', 'Auvergne-Rhône-Alpes', 'Nouvelle-Aquitaine'],
-    DE: ['Bavaria', 'Baden-Württemberg', 'Lower Saxony'],
-    ES: ['Andalusia', 'Catalonia', 'Madrid'],
+    'United Kingdom': ['England', 'Scotland', 'Wales', 'Northern Ireland'],
+    'Ireland': ['Leinster', 'Munster', 'Connacht', 'Ulster'],
+    'France': ['Île-de-France', 'Auvergne-Rhône-Alpes', 'Nouvelle-Aquitaine'],
+    'Germany': ['Bavaria', 'Baden-Württemberg', 'Lower Saxony'],
+    'Spain': ['Andalusia', 'Catalonia', 'Madrid'],
 };
 
 export const proofOfAddressInstructions = [
