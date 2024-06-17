@@ -1,12 +1,13 @@
 .address-form {
-    /* Style the overall form if needed */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
   
   .address-line {
     display: flex; 
     flex-wrap: wrap; 
     align-items: center; 
-    margin-bottom: 10px; 
   }
   
   .address-line label { 
@@ -17,7 +18,8 @@
   .address-line input[type="text"],
   .address-line select {
     flex: 1 0 33.333%;  /* Take up exactly one third, but can grow */
-    padding: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
     border: 1px solid #ccc;
     border-radius: 4px; 
     justify-content: flex-end;

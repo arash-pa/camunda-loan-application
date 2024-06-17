@@ -4,6 +4,11 @@
   padding: 2rem;
 }
 
+input[type="text"],
+input[type="number"] {
+  height: 10px
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -51,16 +56,16 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     background-color: #213547;
     color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #0f96c1;
   }
   button {
-    background-color: #7925d3;
+    background-color: #00bdf0;
     color: #ffffff;
   }
 }
@@ -100,19 +105,28 @@
 }
 
 .form-container {
-  display: flex; /* Use flexbox for column layout */
+  display: grid; /* Use flexbox for column layout */
   gap: 20px; /* Spacing between columns */
+  grid-template-columns: repeat(3, 1fr);
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
-.form-column {
-  flex: 0 0 600px; /* Key change: calculate width for 2 columns */
+.form-group {
   display: flex;
   flex-direction: column; /* Arrange elements vertically */
-  min-width: 600px; /* Ensure minimum width if needed */
-  margin: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-self: start;
 }
 
-.form-column + .form-column::before {
+.form-group > div {
+  display: flex;
+}
+
+
+.form-group + .form-group::before {
   /* Target elements AFTER the 1st column */
   content: "";
   position: absolute;
@@ -122,29 +136,55 @@
   border-left: 1px solid #ccc; /* Style the divider line */
 }
 
-.wizard-wrapper {
-  padding: 15px;
+.form-group input[type="text"], 
+.form-group input[type="email"],
+.form-group input[type="number"],
+.form-group select { /* If using standard select elements */
+  width: 100%; 
 }
 
-.wizard-navigation {
-  display: flex;             /* Enable flexbox for the button container */
-  justify-content: space-between; /* Push buttons to opposite ends */
-  align-items: center;      /* Vertically align buttons in the center */
-  width: 100%;              /* Optional: Ensure the container spans the full width */
-  margin-top: auto;         /* Push buttons to the bottom of the parent */
-  gap: 10px;
+.input-line-no-label {
+  display: flex; /* Use flexbox for easy alignment */
+  flex-direction: column;
+  align-items: baseline; /* Align the label and input vertically */
+  margin-bottom: 10px; /* Add some spacing between input lines */
+  flex: 1;
+  height: 40px
 }
 
+.input-line-no-label > * {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-top: 25px;
+}
+
+.input-line-no-label input {
+  flex: 1 1 50%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  justify-content: flex-end;
+  margin-right: 10px;
+  background-color: #fff;
+  color: #000;
+  width: 70%;
+}
 
 .input-line {
   display: flex; /* Use flexbox for easy alignment */
-  align-items: center; /* Align the label and input vertically */
+  flex-direction: column;
+  align-items: start; /* Align the label and input vertically */
   margin-bottom: 10px; /* Add some spacing between input lines */
+  flex: 1;
+  width: 100%;
 }
 
 .input-line label {
-  flex: 0 0 150px; /* Prevent the label from growing or shrinking */
+  flex: 0 0 0px; /* Prevent the label from growing or shrinking */
   margin-right: 10px; /* Add spacing between the label and input */
+  font-weight: 500;
 }
 
 .input-line input {
@@ -154,15 +194,35 @@
   border-radius: 4px;
   justify-content: flex-end;
   margin-right: 10px;
+  background-color: #fff;
+  color: #000;
+  width: 100%;
 }
 
 .input-line select {
   flex: 1 1 50%;
-  padding: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   justify-content: flex-end;
   margin-right: 10px;
+  background-color: #fff;
+  color: #000;
+  height: 30px;
+}
+
+.react-datepicker-wrapper {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
+
+.PhoneInput {
+  display: flex;
+  align-items: center;
+  width: 100%
 }
 
 .currency-input-container {
@@ -174,6 +234,8 @@
 .currency-input-container label {
   flex: 0 0 150px; /* Prevent the label from growing or shrinking */
   margin-right: 10px; /* Add spacing between the label and input */
+  font-weight: 500;
+  color: #000;
 }
 
 .input-and-dropdown {
@@ -187,7 +249,7 @@
 }
 
 .input-and-dropdown > input[type="number"] {
-  flex: 4; /* Input takes up 4/5ths of the space */
+  flex: 8; /* Input takes up 4/5ths of the space */
 }
 
 .button-container {
@@ -218,4 +280,19 @@ button[type="submit"] {
 
 .loading-cursor {
   cursor: wait; /* Standard loading cursor style */
+}
+
+.fade-enter {
+  opacity: 0; /* Start with 0 opacity */
+}
+.fade-enter-active {
+  opacity: 1;  /* Transition to full opacity */
+  transition: opacity 300ms ease-in-out; /* Smooth transition */
+}
+.fade-exit {
+  opacity: 1; 
+}
+.fade-exit-active {
+  opacity: 0; 
+  transition: opacity 300ms ease-in-out;
 }

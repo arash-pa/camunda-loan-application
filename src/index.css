@@ -36,7 +36,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 5px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -56,14 +56,14 @@ button:focus-visible {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    background-color:#abadbd;
+    background-color:#f0f0f0;
     color: #000000;
   }
   a:hover {
-    color: #747bff;
+    color: #0f96c1;
   }
   button {
-    background-color: #7925d3;
+    background-color: #00bdf0;
   }
 }
 

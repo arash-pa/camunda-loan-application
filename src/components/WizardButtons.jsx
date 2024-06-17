@@ -1,4 +1,5 @@
 import React from "react";
+import './WizardButtons.css'
 
 const WizardButtons = ({
   currentStep,

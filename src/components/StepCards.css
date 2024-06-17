@@ -2,7 +2,7 @@
     display: flex; /* Use flexbox for layout */
     justify-content: space-around; /* Evenly space the cards */
     align-items: center; /* Vertically align the cards */
-    margin-bottom: 50px; /* Add bottom margin as needed */
+    margin-bottom: 10px; /* Add bottom margin as needed */
     margin-top: 25px;
   }
   
@@ -17,11 +17,12 @@
     justify-content: center;
     background-color: #f0f0f0; /* Background color */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    transition: outline 0.05s;
   }
   
   .step-card-image {
-    width: 50px; /* Adjust image size as needed */
-    height: 50px;
+    width: 30px; /* Adjust image size as needed */
+    height: 30px;
     object-fit: cover;
   }
   
@@ -31,11 +32,16 @@
   }
   
   .step-card.active {
-    background-color: #007bff; /* Active card color */
+    background-color: #00bdf0; /* Active card color */
     color: white;
   }
 
   .step-card.completed {
     background-color: green; /* Green for completed steps */
     color: white; /* Optional: White text for better contrast */
+  }
+
+  .step-card:hover {
+    outline: 2px solid #00bdf0; /* Blue outline on hover (adjust color as needed) */
+    outline-offset: 2px;        /* Optional: Offset the outline for better visibility */
   }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 //import "./index.css";
 import "./app.css";
 import Navbar from "./components/Navbar";
@@ -8,11 +9,14 @@ import {
 } from "../data/data";
 import TextInput from "./components/TextInput";
 import AddressInput from "./components/AddressInput";
+import AddressInput2 from "./components/AddressInput2";
+import PaymentDetails from "./components/PaymentDetails";
 import PhoneInputComponent from "./components/PhoneInputComponent";
 import EmailInput from "./components/EmailInput";
 import DropdownInput from "./components/DropdownInput";
 import DateInput from "./components/DateInput";
-import CurrencyInput from "./components/CurrencyInput";
+import CurrencyInputDep from "./components/CurrencyInputDep";
+import CurrencyInput from "react-currency-input-field";
 import WizardButtons from "./components/WizardButtons";
 import StepCards from "./components/StepCards";
 import {
@@ -30,38 +34,30 @@ import {
   createCustomerData,
 } from "./functions/builders";
 
-import contact from './assets/contact.png';
-import address from './assets/address.png';
-import payment from './assets/payment.png';
-import documents from './assets/documents.png';
+import contact from "./assets/contact.png";
+import address from "./assets/address.png";
+import payment from "./assets/payment.png";
+import documents from "./assets/documents.png";
 
 const App = () => {
   const formRef = useRef(null);
+  const nodeRef = useRef(null);
   const [currentStep, setCurrentStep] = useState(1);
   const steps = [
     {
       image: contact,
-      title: 'Contact Information',
-      description:
-        "The customer's personal contact information",
-    },
-    {
-      image: address,
-      title: 'Address',
-      description:
-        "The customer's address",
+      title: "Contact Information",
+      description: "The customer's personal contact information",
     },
     {
       image: payment,
-      title: 'Payment Details',
-      description:
-        "The customer's payment details",
+      title: "Payment Details",
+      description: "The customer's payment details",
     },
     {
       image: documents,
-      title: 'Documents',
-      description:
-        "The customer's address and income proof documents",
+      title: "Documents",
+      description: "The customer's address and income proof documents",
     },
   ];
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -94,7 +90,7 @@ const App = () => {
     loanType: "Personal",
     loanAmount: {
       currency: "GBP",
-      amount: "499",
+      amount: 499,
     },
   });
 
@@ -115,11 +111,16 @@ const App = () => {
     });
   };
 
-  const handleCurrencyChange = (currencyInput) => {
-    setUserInputs({
-      ...userInputs,
-      loanAmount: currencyInput, // Update loanAmount directly
-    });
+  const handlePaymentDetailChange = (event) => {
+    const { name, value } = event.target;
+
+    setUserInputs((prevInputs) => ({
+      ...prevInputs,
+      paymentDetails: {
+        ...prevInputs.paymentDetails,
+        [name]: value, // Update the specific field in paymentDetails
+      },
+    }));
   };
 
   const handlePhoneChange = (value) => {
@@ -132,6 +133,16 @@ const App = () => {
   };
   const fileExtensions = {
     accept: ".jpg, .jpeg, .png, .pdf",
+  };
+
+  const handleValueChange = (value, name, values) => {
+    setUserInputs({
+      ...userInputs,
+      loanAmount: {
+        currency: values.formatted[0],
+        amount: values.float,
+      },
+    });
   };
 
   const today = new Date();
@@ -196,6 +207,7 @@ const App = () => {
       formRef.current.reportValidity();
     }
   };
+  console.log(userInputs);
   return (
     <div className={isLoading ? "loading-cursor" : ""}>
       <div>
@@ -228,101 +240,174 @@ const App = () => {
         <form ref={formRef}>
           {" "}
           <div className="form-wrapper">
-            <StepCards steps={steps} currentStep={currentStep} />
+            <StepCards
+              steps={steps}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+            />
             <hr></hr>
-            <div className="form-container">
-              {/* Wrapper for layout */}
-              <div className="form-column">
-                {/* Column 1 */}
-                <TextInput
-                  placeholder="Enter First Name"
-                  label="First Name"
-                  name="firstName"
-                  value={userInputs.firstName}
-                  onChange={handleChange}
-                />
-                <TextInput
-                  placeholder="Enter Last Name(s)"
-                  label="Last Name"
-                  name="lastName"
-                  value={userInputs.lastName}
-                  onChange={handleChange}
-                />
-                <DateInput
-                  label="Date of Birth"
-                  name="dateOfBirth"
-                  dateBefore={eighteenYearsAgo}
-                  dateAfter={hundredYearsAgo}
-                  date={userInputs.dateOfBirth}
-                  errorMessage="Invalid date selection"
-                  onChange={(date) =>
-                    setUserInputs({ ...userInputs, dateOfBirth: date })
-                  }
-                />
-                <PhoneInputComponent
-                  name="phone"
-                  value={userInputs.phone}
-                  onChange={handlePhoneChange}
-                />
-                <EmailInput
-                  name="emailAddress"
-                  label="Email"
-                  value={userInputs.emailAddress}
-                  onChange={handleChange}
-                />
-                <div className="input-line">
-                  <DropdownInput
-                    label="Loan Type"
-                    name="loanType"
-                    value={userInputs.loanType || ""}
-                    options={loanTypeLookup}
-                    onChange={handleChange}
-                    idKey="loanTypeID"
-                    returnIdKey={true}
-                  />
-                </div>
-                <div className="input-line">
-                  <CurrencyInput
-                    name="loanAmount"
-                    label="Loan Amount"
-                    value={userInputs.loanAmount}
-                    onChange={handleCurrencyChange}
-                  />
-                </div>
-              </div>
-              <div className="form-column">
-                {/* Column 2 */}
-                <AddressInput
-                  name="address"
-                  value={userInputs.address}
-                  onChange={(address) =>
-                    setUserInputs({ ...userInputs, address })
-                  }
-                />
-                <div className="input-line">
-                  <DropdownInput
-                    label="Employment Type"
-                    name="employmentType"
-                    value={userInputs.employmentType || ""}
-                    options={employmentTypeLookup}
-                    onChange={handleChange}
-                    idKey="employmentTypeID"
-                    returnIdKey={true}
-                  />
-                </div>
-                <div className="input-line">
-                  <DropdownInput
-                    label="Housing Status"
-                    name="housingStatus"
-                    value={userInputs.housingStatus || ""}
-                    options={housingStatusLookup}
-                    onChange={handleChange}
-                    idKey="housingStatusID"
-                    returnIdKey={true}
-                  />
-                </div>
-              </div>
+
+            <div ref={nodeRef}>
+              {currentStep === 1 && (
+                <React.Fragment>
+                  <div className="form-container">
+                    {/* Wrapper for layout */}
+                    <div className="form-group">
+                      {/* Column 1 */}
+                      <TextInput
+                        placeholder="Enter First Name"
+                        label="First Name"
+                        name="firstName"
+                        value={userInputs.firstName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      {/* Column 2 */}
+                      <div>
+                        <div className="input-line">
+                          <DropdownInput
+                            label="Loan Type & Amount"
+                            name="loanType"
+                            value={userInputs.loanType || ""}
+                            options={loanTypeLookup}
+                            onChange={handleChange}
+                            idKey="loanTypeID"
+                            returnIdKey={true}
+                          />
+                        </div>
+                        <div className="input-line-no-label">
+                          <CurrencyInput
+                            style={{ height: "40px" }}
+                            id="loanAmount"
+                            placeholder="Enter Loan Amount"
+                            defaultValue={userInputs.loanAmount.amount}
+                            value={userInputs.loanAmount.amount}
+                            decimalsLimit={2}
+                            decimalSeparator="."
+                            groupSeparator=","
+                            prefix="£"
+                            onValueChange={handleValueChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <PhoneInputComponent
+                        name="phone"
+                        value={userInputs.phone}
+                        onChange={handlePhoneChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-container">
+                    {/* Wrapper for layout */}
+                    <div className="form-group">
+                      {/* Column 1 */}
+                      <TextInput
+                        placeholder="Enter Last Name(s)"
+                        label="Last Name"
+                        name="lastName"
+                        value={userInputs.lastName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      {/* Column 2 */}
+                      <div className="input-line">
+                        <DropdownInput
+                          label="Employment Type"
+                          name="employmentType"
+                          value={userInputs.employmentType || ""}
+                          options={employmentTypeLookup}
+                          onChange={handleChange}
+                          idKey="employmentTypeID"
+                          returnIdKey={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <EmailInput
+                        name="emailAddress"
+                        label="Email"
+                        value={userInputs.emailAddress}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-container">
+                    {/* Wrapper for layout */}
+                    <div className="form-group">
+                      {/* Column 1 */}
+                      <DateInput
+                        label="Date of Birth"
+                        name="dateOfBirth"
+                        dateBefore={eighteenYearsAgo}
+                        dateAfter={hundredYearsAgo}
+                        date={userInputs.dateOfBirth}
+                        errorMessage="Invalid date selection"
+                        onChange={(date) =>
+                          setUserInputs({
+                            ...userInputs,
+                            dateOfBirth: date,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="form-group">
+                      {/* Column 2 */}
+                      <div className="input-line">
+                        <DropdownInput
+                          label="Housing Status"
+                          name="housingStatus"
+                          value={userInputs.housingStatus || ""}
+                          options={housingStatusLookup}
+                          onChange={handleChange}
+                          idKey="housingStatusID"
+                          returnIdKey={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group"></div>
+                  </div>
+                </React.Fragment>
+              )}
+
+              {currentStep === 2 && (
+                <React.Fragment>
+                  <div className="form-container">
+                    <div className="form-group">
+                      <AddressInput
+                        name="address"
+                        value={userInputs.address}
+                        onChange={(address) =>
+                          setUserInputs({ ...userInputs, address })
+                        }
+                      />
+                    </div>
+                    <div className="form-group">
+                      <AddressInput2
+                        name="address"
+                        value={userInputs.address}
+                        onChange={(address) =>
+                          setUserInputs({ ...userInputs, address })
+                        }
+                      />
+                    </div>
+                    <PaymentDetails
+                      userInputs={userInputs}
+                      onChange={handlePaymentDetailChange}
+                    />
+                  </div>
+                </React.Fragment>
+              )}
+              {currentStep === 3 && (
+                <React.Fragment>
+                  <p>Docs</p>
+                </React.Fragment>
+              )}
             </div>
+
             <WizardButtons
               currentStep={currentStep}
               setCurrentStep={setCurrentStep}

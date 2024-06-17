@@ -18,9 +18,11 @@
     "libphonenumber-js": "^1.10.57",
     "react": "^18.0.0",
     "react-bootstrap": "^2.10.1",
+    "react-currency-input-field": "^3.8.0",
     "react-datepicker": "^6.3.0",
     "react-dom": "^18.0.0",
-    "react-phone-number-input": "^3.3.9"
+    "react-phone-number-input": "^3.3.9",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",

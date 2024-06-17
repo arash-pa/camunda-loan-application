@@ -1,0 +1,14 @@
+.wizard-wrapper {
+    padding: 15px;
+    margin-right: 25px;
+    margin-left: 25px;
+  }
+  
+  .wizard-navigation {
+    display: flex;             /* Enable flexbox for the button container */
+    justify-content: space-between; /* Push buttons to opposite ends */
+    align-items: center;      /* Vertically align buttons in the center */
+    width: 100%;              /* Optional: Ensure the container spans the full width */
+    margin-top: auto;         /* Push buttons to the bottom of the parent */
+    gap: 10px;
+  }

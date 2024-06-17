@@ -21,13 +21,12 @@ const AddressInput = ({ value, onChange }) => {
     setRegions(countryRegions[value.country]);
   }, []);
 
-  const handleRegionChange = (event) => {
-    setSelectedRegion(event.target.value);
+  const handleAddressChange = (event) => {
     setAddress({
       ...address,
-      region: event.target.value, // Update the 'region' here
+      [event.target.name]: event.target.value,
     });
-    onChange(address); // Notify the parent
+    onChange(address); // Notify parent of changes immediately
   };
 
   const handleCountryChange = (event) => {
@@ -44,15 +43,7 @@ const AddressInput = ({ value, onChange }) => {
     });
     onChange(address);
   };
-
-  const handleAddressChange = (event) => {
-    setAddress({
-      ...address,
-      [event.target.name]: event.target.value,
-    });
-    onChange(address); // Notify parent of changes immediately
-  };
-
+  
   const handlePostcodeChange = (newPostcode) => {
     setAddress({
       ...address,
@@ -76,18 +67,6 @@ const AddressInput = ({ value, onChange }) => {
         />
       </div>
       <div className="input-line">
-        <label htmlFor="addressLine2">Address Line 2</label>
-        <input
-          type="text"
-          placeholder="Enter Address Line 2"
-          id="addressLine2"
-          name="addressLine2"
-          value={address.addressLine2}
-          onChange={handleAddressChange}
-          required={false}
-        />
-      </div>
-      <div className="input-line">
       <PostCodeInput
           name="postCode"
           label="Post Code"
@@ -105,27 +84,7 @@ const AddressInput = ({ value, onChange }) => {
           returnIdKey={true}
         />
       </div>
-      <div className="input-line">
-      <DropdownInput
-          label="Region"
-          name="region"
-          value={address.region || ""}
-          options={regions}
-          onChange={handleRegionChange}
-        />
-      </div>
-      <div className="input-line">
-      <label htmlFor="city">City</label>
-        <input
-          type="text"
-          placeholder="Enter City"
-          id="city"
-          name="city"
-          value={address.city}
-          onChange={handleAddressChange}
-          required={true}
-        />
-      </div>
+      
     </div>
   );
 };

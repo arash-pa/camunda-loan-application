@@ -2,7 +2,7 @@ import React from 'react';
 
 const DropdownInput = ({ label, name, value, options, idKey = 'code', nameKey = 'name', returnIdKey=false, onChange, required=true }) => {
   return (
-    <>
+    <div className='input-line'>
       <label htmlFor={name}>{label}</label>
       <select id={name} name={name} required={required} value={value || ''} onChange={onChange}>
         <option value="">Select an option</option>
@@ -20,7 +20,7 @@ const DropdownInput = ({ label, name, value, options, idKey = 'code', nameKey = 
           );
         })}
       </select>
-    </>
+    </div>
   );
 };
 

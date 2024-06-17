@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DropdownInput from "./DropdownInput";
 import { currencyOptions } from "../../data/data";
 
-const CurrencyInput = ({ name, label, value, onChange, error }) => {
+const CurrencyInputDep = ({ name, label, value, onChange, error }) => {
   const [currency, setCurrency] = useState(value.currency || "GBP");
   const [amount, setAmount] = useState(value.amount || "");
 
@@ -25,7 +25,7 @@ const CurrencyInput = ({ name, label, value, onChange, error }) => {
   return (
     <div className="currency-input-container">
       <div className="input-and-dropdown">
-        <DropdownInput
+        <select
           options={currencyOptions}
           value={currency}
           onChange={handleCurrencyChange}
@@ -47,4 +47,4 @@ const CurrencyInput = ({ name, label, value, onChange, error }) => {
   );
 };
 
-export default CurrencyInput;
+export default CurrencyInputDep;
