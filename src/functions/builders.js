@@ -86,8 +86,8 @@ export function createCustomerData(data, POIName, POIUrl, POAName, POAUrl) {
     lastName: data.lastName,
     dateOfBirth: formatDate(data.dateOfBirth),
     address: data.addressFull,
-    fk_employmentTypeID: employmentType,
-    fk_housingStatusID: housingStatus,
+    fk_employmentTypeID: data.employmentType,
+    fk_housingStatusID: data.housingStatus,
     email: data.emailAddress,
     phoneNo: data.phone,
     fk_createdByUserID: 1, // Hardcoded to system
