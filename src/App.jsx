@@ -15,10 +15,10 @@ import PhoneInputComponent from "./components/PhoneInputComponent";
 import EmailInput from "./components/EmailInput";
 import DropdownInput from "./components/DropdownInput";
 import DateInput from "./components/DateInput";
-import CurrencyInputDep from "./components/CurrencyInputDep";
 import CurrencyInput from "react-currency-input-field";
 import WizardButtons from "./components/WizardButtons";
 import StepCards from "./components/StepCards";
+import Tooltip from "./components/Tooltip";
 import {
   employmentTypeLookup,
   housingStatusLookup,
@@ -29,15 +29,8 @@ import { callCamundaWebhook } from "../data/callCamundaWebhook";
 import { uploadFileToS3 } from "./functions/apis";
 
 import {
-  generateCardNumber,
-  generateSortCode,
   createCustomerData,
 } from "./functions/builders";
-
-import contact from "./assets/contact.png";
-import address from "./assets/address.png";
-import payment from "./assets/payment.png";
-import documents from "./assets/documents.png";
 
 const App = () => {
   const formRef = useRef(null);
@@ -45,17 +38,17 @@ const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const steps = [
     {
-      image: contact,
+      image: "contact",
       title: "Contact Information",
       description: "The customer's personal contact information",
     },
     {
-      image: payment,
+      image: "payment",
       title: "Payment Details",
       description: "The customer's payment details",
     },
     {
-      image: documents,
+      image: "documents",
       title: "Documents",
       description: "The customer's address and income proof documents",
     },
@@ -246,7 +239,6 @@ const App = () => {
               setCurrentStep={setCurrentStep}
             />
             <hr></hr>
-
             <div ref={nodeRef}>
               {currentStep === 1 && (
                 <React.Fragment>
@@ -394,10 +386,12 @@ const App = () => {
                         }
                       />
                     </div>
-                    <PaymentDetails
-                      userInputs={userInputs}
-                      onChange={handlePaymentDetailChange}
-                    />
+                    <div className="form-group">
+                      <PaymentDetails
+                        userInputs={userInputs}
+                        onChange={handlePaymentDetailChange}
+                      />
+                    </div>
                   </div>
                 </React.Fragment>
               )}
@@ -405,7 +399,7 @@ const App = () => {
                 <React.Fragment>
                   <div className="docs-container">
                     <div className="form-group">
-                      <h2>Proof Of Address</h2>
+                      <Tooltip title="Proof of Address" instructions={proofOfAddressInstructions} />
                       <FileUpload
                         acceptedTypes={[
                           "image/jpeg",
@@ -420,7 +414,7 @@ const App = () => {
                     </div>
 
                     <div className="form-group">
-                      <h2>Proof Of Income</h2>
+                    <Tooltip title="Proof of Income" instructions={proofOfIncomeInstructions} />
                       <FileUpload
                         acceptedTypes={[
                           "image/jpeg",
@@ -445,7 +439,6 @@ const App = () => {
               handleSubmit={handleSubmit}
             />
           </div>
-          <hr></hr>
         </form>
       )}
     </div>

@@ -2,6 +2,8 @@
     padding: 15px;
     margin-right: 25px;
     margin-left: 25px;
+    align-items: baseline;
+    margin-top: auto;
   }
   
   .wizard-navigation {
@@ -11,4 +13,5 @@
     width: 100%;              /* Optional: Ensure the container spans the full width */
     margin-top: auto;         /* Push buttons to the bottom of the parent */
     gap: 10px;
+     
   }

@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DropdownInput from "./DropdownInput.jsx";
-import PostCodeInput from "./PostCodeInput.jsx";
-import { europeanCountries, countryRegions } from "../../data/data.js";
 import "./AddressInput.css";
 
 const PaymentDetails = ({ userInputs, onChange }) => {

@@ -1,5 +1,9 @@
 import React from "react";
 import "./StepCards.css";
+import CheckIcon from '@mui/icons-material/Check';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import DifferenceIcon from '@mui/icons-material/Difference';
 
 function StepCards({ steps, currentStep, setCurrentStep }) {
     const handleClick = (index) => {
@@ -19,7 +23,17 @@ function StepCards({ steps, currentStep, setCurrentStep }) {
             transform: index === currentStep -1 ? 'scale(1.1)' : 'scale(1)',
             opacity: index === currentStep -1 ? '1' : '0.75'}}
         >
-          <img src={step.image} alt={step.title} className="step-card-image" />
+          {index < currentStep - 1 ? (
+            <CheckIcon className="step-card-image" />
+          ) : step.image === "contact" ? (
+            <ContactPageIcon className="step-card-image" />
+          ) : step.image === "payment" ? (
+            <PaymentsIcon className="step-card-image" />
+          ) : step.image === "documents" ? (
+            <DifferenceIcon className="step-card-image" /> 
+          ) : (
+            <CheckIcon className="step-card-image" /> // Default
+          )}
         </div>
       ))}
     </div>

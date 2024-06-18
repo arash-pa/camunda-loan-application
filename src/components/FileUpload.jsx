@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./FileUpload.css"
 import { MdCloudUpload, MdDelete } from "react-icons/md";
-import { AiFillFileImage } from "react-icons/ai";
+import { AiFillFileImage, AiFillIdcard } from "react-icons/ai";
+import { FaRegFilePdf } from "react-icons/fa";
 
 const FileUpload = ({
   acceptedTypes,
@@ -11,6 +12,7 @@ const FileUpload = ({
   instructions,
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState("No File Selected")
   const [validationError, setValidationError] = useState(false);
 
   const handleChange = (event) => {
@@ -18,6 +20,7 @@ const FileUpload = ({
 
     if (acceptedTypes.includes(file.type)) {
       setSelectedFile(file);
+      setFileName(file.name)
       setValidationError(false);
       onUpload(file, fieldName); // Pass the file to the parent component
     } else {
@@ -28,14 +31,29 @@ const FileUpload = ({
 
   return (
     <main>
-      <ul style={{ textAlign: "left" }}>
-          {instructions.map((instruction, index) => (
-            <li key={index}>{instruction}</li>
-          ))}
-        </ul>
-      <form action="" className="upload-form">
-      <input type="file" required={true} onChange={handleChange} />
+      <form action="" className="upload-form" onClick={() => document.querySelector(".input-field").click()}>
+      <input type="file" required={true} onChange={handleChange} className="input-field" hidden />
+      {selectedFile ?
+      <FaRegFilePdf size={60}/> :
+      <>
+      <MdCloudUpload color="#00bdf0" size={60} />
+      <p>Browse Files</p>
+      </>}
       </form>
+      <section className="uploaded-row">
+        <AiFillFileImage color="#00bdf0" />
+        <span className="upload-content">
+        {fileName} - 
+        <MdDelete
+        onClick={()=> {
+          setFileName("No File Selected")
+          setSelectedFile(null)
+          }}
+        size={20}
+        color="red"
+        cursor={"pointer"} />
+        </span>
+      </section>
       {validationError && <p style={{ color: "red" }}>{errorMessage}</p>}
     </main>
   );
