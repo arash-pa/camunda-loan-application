@@ -102,12 +102,21 @@ input[type="number"] {
   padding-top: 10px;
   margin-top: 75px;
   border-radius: 5px;
+  width: 66vw;
 }
 
 .form-container {
   display: grid; /* Use flexbox for column layout */
   gap: 20px; /* Spacing between columns */
   grid-template-columns: repeat(3, 1fr);
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.docs-container {
+  display: grid; /* Use flexbox for column layout */
+  gap: 20px; /* Spacing between columns */
+  grid-template-columns: repeat(2, 1fr);
   padding-left: 25px;
   padding-right: 25px;
 }

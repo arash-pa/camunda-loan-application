@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import "./FileUpload.css"
+import { MdCloudUpload, MdDelete } from "react-icons/md";
+import { AiFillFileImage } from "react-icons/ai";
 
 const FileUpload = ({
   acceptedTypes,
@@ -24,19 +27,17 @@ const FileUpload = ({
   };
 
   return (
-    <div className="file-upload">
-      <div className="instructions">
-        <ul style={{ textAlign: "left" }}>
+    <main>
+      <ul style={{ textAlign: "left" }}>
           {instructions.map((instruction, index) => (
             <li key={index}>{instruction}</li>
           ))}
         </ul>
-      </div>
-      <div className="upload-section">
-        <input type="file" required={true} onChange={handleChange} />
-        {validationError && <p style={{ color: "red" }}>{errorMessage}</p>}
-      </div>
-    </div>
+      <form action="" className="upload-form">
+      <input type="file" required={true} onChange={handleChange} />
+      </form>
+      {validationError && <p style={{ color: "red" }}>{errorMessage}</p>}
+    </main>
   );
 };
 

@@ -36,7 +36,7 @@ export function createCustomerData(data, POIName, POIUrl, POAName, POAUrl) {
 
     return {
       fk_caseStatusID: 1, // hardcoded to new case
-      fk_loanTypeID: parseInt(data.loanType, 10),
+      fk_loanTypeID: data.loanType,
       loanAmount: data.loanAmount.currency + " " + data.loanAmount.amount,
       renewalFrequency: "Daily",
       nextRenewalDate: formatDate(tomorrow),
@@ -86,8 +86,8 @@ export function createCustomerData(data, POIName, POIUrl, POAName, POAUrl) {
     lastName: data.lastName,
     dateOfBirth: formatDate(data.dateOfBirth),
     address: data.addressFull,
-    fk_employmentTypeID: parseInt(data.employmentType, 10),
-    fk_housingStatusID: parseInt(data.housingStatus, 10),
+    fk_employmentTypeID: employmentType,
+    fk_housingStatusID: housingStatus,
     email: data.emailAddress,
     phoneNo: data.phone,
     fk_createdByUserID: 1, // Hardcoded to system

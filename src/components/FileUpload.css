@@ -1,0 +1,10 @@
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px dashed #00bdf0;
+    height: 150px;
+    width : 250px;
+    cursor: pointer;
+    border-radius: 5px;
+}

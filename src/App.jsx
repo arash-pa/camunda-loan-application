@@ -403,7 +403,37 @@ const App = () => {
               )}
               {currentStep === 3 && (
                 <React.Fragment>
-                  <p>Docs</p>
+                  <div className="docs-container">
+                    <div className="form-group">
+                      <h2>Proof Of Address</h2>
+                      <FileUpload
+                        acceptedTypes={[
+                          "image/jpeg",
+                          "image/png",
+                          "application/pdf",
+                        ]}
+                        onUpload={handleFileUpload}
+                        errorMessage="Invalid file type. Please upload JPEG, PNG, or PDF files."
+                        fieldName="proofOfAddress"
+                        instructions={proofOfAddressInstructions}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <h2>Proof Of Income</h2>
+                      <FileUpload
+                        acceptedTypes={[
+                          "image/jpeg",
+                          "image/png",
+                          "application/pdf",
+                        ]}
+                        onUpload={handleFileUpload}
+                        errorMessage="Invalid file type. Please upload JPEG, PNG, or PDF files."
+                        fieldName="proofOfIncome"
+                        instructions={proofOfIncomeInstructions}
+                      />
+                    </div>
+                  </div>
                 </React.Fragment>
               )}
             </div>
@@ -415,31 +445,7 @@ const App = () => {
               handleSubmit={handleSubmit}
             />
           </div>
-          <div>
-            <hr></hr>
-            <h2>Proof Of Address</h2>
-            <FileUpload
-              acceptedTypes={["image/jpeg", "image/png", "application/pdf"]}
-              onUpload={handleFileUpload}
-              errorMessage="Invalid file type. Please upload JPEG, PNG, or PDF files."
-              fieldName="proofOfAddress"
-              instructions={proofOfAddressInstructions}
-            />
-            <hr></hr>
-            <h2>Proof Of Income</h2>
-            <FileUpload
-              acceptedTypes={["image/jpeg", "image/png", "application/pdf"]}
-              onUpload={handleFileUpload}
-              errorMessage="Invalid file type. Please upload JPEG, PNG, or PDF files."
-              fieldName="proofOfIncome"
-              instructions={proofOfIncomeInstructions}
-            />
-            <div className="button-container">
-              <button type="submit" onClick={handleSubmit}>
-                Submit
-              </button>
-            </div>
-          </div>
+          <hr></hr>
         </form>
       )}
     </div>

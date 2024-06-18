@@ -37,7 +37,7 @@
   }
 
   .step-card.completed {
-    background-color: green; /* Green for completed steps */
+    background-color: #00bdf0; /* Green for completed steps */
     color: white; /* Optional: White text for better contrast */
   }
 
