@@ -9,7 +9,6 @@ const FileUpload = ({
   onUpload,
   errorMessage,
   fieldName,
-  instructions,
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState("No File Selected")

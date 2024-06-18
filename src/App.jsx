@@ -402,14 +402,11 @@ const App = () => {
                       <Tooltip title="Proof of Address" instructions={proofOfAddressInstructions} />
                       <FileUpload
                         acceptedTypes={[
-                          "image/jpeg",
-                          "image/png",
                           "application/pdf",
                         ]}
                         onUpload={handleFileUpload}
-                        errorMessage="Invalid file type. Please upload JPEG, PNG, or PDF files."
+                        errorMessage="Invalid file type. Please upload PDF files."
                         fieldName="proofOfAddress"
-                        instructions={proofOfAddressInstructions}
                       />
                     </div>
 
@@ -417,14 +414,11 @@ const App = () => {
                     <Tooltip title="Proof of Income" instructions={proofOfIncomeInstructions} />
                       <FileUpload
                         acceptedTypes={[
-                          "image/jpeg",
-                          "image/png",
                           "application/pdf",
                         ]}
                         onUpload={handleFileUpload}
-                        errorMessage="Invalid file type. Please upload JPEG, PNG, or PDF files."
+                        errorMessage="Invalid file type. Please upload PDF files."
                         fieldName="proofOfIncome"
-                        instructions={proofOfIncomeInstructions}
                       />
                     </div>
                   </div>
