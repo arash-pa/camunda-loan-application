@@ -25,7 +25,6 @@ import {
   loanTypeLookup,
 } from "../data/lookupHardcode";
 import FileUpload from "./components/FileUpload";
-import FileUpload2 from "./components/FileUpload2";
 import { callCamundaWebhook } from "../data/callCamundaWebhook";
 import { uploadFileToS3 } from "./functions/apis";
 
@@ -121,41 +120,21 @@ const App = () => {
     setUserInputs({ ...userInputs, phone: value });
   };
 
-  const handleFileChangeAddress = (event) => {
-    console.log("j'address")
+  const handleFileChange = (event, fieldName, index) => {
+    console.log(index, fieldName)
     const file = event.target.files[0];
     if (["application/pdf"].includes(file.type)) {
-      setUserInputs({ ...userInputs, "proofOfAddress": file});
+      setUserInputs({ ...userInputs, [fieldName]: file});
       setFileValidations(prevValidations => {
         const newValidations = [...prevValidations]; 
-        newValidations[0] = false;            
+        newValidations[index] = false;            
         return newValidations;                     
       });
     } else {
-      setUserInputs({ ...userInputs, "proofOfAddress": null});
+      setUserInputs({ ...userInputs, [fieldName]: null});
       setFileValidations(prevValidations => {
         const newValidations = [...prevValidations]; 
-        newValidations[0] = true;            
-        return newValidations;                     
-      });
-    }
-  }
-
-  const handleFileChangeIncome = (event, index, fieldName) => {
-    console.log("j'income")
-    const file = event.target.files[0];
-    if (["application/pdf"].includes(file.type)) {
-      setUserInputs({ ...userInputs, "proofOfIncome": file});
-      setFileValidations(prevValidations => {
-        const newValidations = [...prevValidations]; 
-        newValidations[1] = false;            
-        return newValidations;                     
-      });
-    } else {
-      setUserInputs({ ...userInputs, "proofOfIncome": null});
-      setFileValidations(prevValidations => {
-        const newValidations = [...prevValidations]; 
-        newValidations[1] = true;            
+        newValidations[index] = true;            
         return newValidations;                     
       });
     }
@@ -435,12 +414,14 @@ const App = () => {
                       />
                       <FileUpload
                         acceptedTypes={["application/pdf"]}
-                        onUpload={handleFileChangeAddress}
+                        onUpload={handleFileChange}
                         errorMessage="Invalid file type. Please upload PDF files."
                         fieldName="proofOfAddress"
                         selectedFile={userInputs?.proofOfAddress}
                         fileName={userInputs?.proofOfAddress?.name}
                         validationError={fileValidations[0]}
+                        userInputs={userInputs}
+                        setUserInputs={setUserInputs}
                         index={0}
                       />
                     </div>
@@ -449,14 +430,16 @@ const App = () => {
                         title="Proof of Income"
                         instructions={proofOfIncomeInstructions}
                       />
-                      <FileUpload2
+                      <FileUpload
                         acceptedTypes={["application/pdf"]}
-                        onUpload={handleFileChangeIncome}
+                        onUpload={handleFileChange}
                         errorMessage="Invalid file type. Please upload PDF files."
                         fieldName="proofOfIncome"
                         selectedFile={userInputs?.proofOfIncome}
                         fileName={userInputs?.proofOfIncome?.name}
                         validationError={fileValidations[1]}
+                        userInputs={userInputs}
+                        setUserInputs={setUserInputs}
                         index={1}
                       />
                     </div>

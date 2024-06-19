@@ -100,7 +100,7 @@ input[type="number"] {
   flex-direction: column; /* Stack children vertically */
   background-color: #fff;
   padding-top: 10px;
-  margin-top: 75px;
+  margin-top: 2.5vh;
   border-radius: 5px;
   width: 66vw;
   height: 66vh;
@@ -311,4 +311,8 @@ button[type="submit"] {
 .file-upload-section {
   display: flex;
   align-items: center;
+}
+
+p {
+  margin: 0
 }

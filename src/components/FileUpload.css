@@ -3,24 +3,27 @@
     flex-direction: column;
     justify-content: center;
     padding: 0 18px;
-    margin: 10px 0;
+    margin-top: 10px;
     align-items: center;
-    border: 2px dashed #00bdf0;
-    height: 125px;
+    border-top: 2px dashed #e9f0ff;
+    border-left: 2px dashed #e9f0ff;
+    border-right: 2px dashed #e9f0ff;
+    height: 20vh;
     width : 25vw;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
 }
 
 .uploaded-row {
-    margin: 10px 0;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     background-color: #e9f0ff;
     width: 25vw;
+    max-height: 3vh;
 }
 
 .upload-content {
@@ -39,4 +42,29 @@ main {
     align-items: center;
     display: flex;
     flex-direction: column;
+}
+
+.delete-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    padding: 15px 20px;
+    border-radius: 0 0 5px 0;
+    margin-right: -20px;
+    max-height: 3vh;
+    height: 3vh;
+    cursor: pointer;
+}
+
+.delete-section-disabled {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF7F7F;
+    padding: 15px 20px;
+    border-radius: 0 0 5px 0;
+    margin-right: -20px;
+    max-height: 3vh;
+    height: 3vh;
 }

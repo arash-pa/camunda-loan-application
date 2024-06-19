@@ -1,6 +1,8 @@
 .label-and-tooltip {
-    justify-content: start;
+    justify-content: stretch;
     display: flex;
+    margin-left: 1.5vw;
+    margin-bottom: 0.25vh;
 }
 .tooltip::before,
 .tooltip::after {
@@ -28,4 +30,8 @@
 .tooltip:hover::before,
 .tooltip:hover::after {
     --scale: 1;
+}
+
+p {
+    margin-right: 10px;
 }

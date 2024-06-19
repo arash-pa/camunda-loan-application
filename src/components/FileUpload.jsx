@@ -12,13 +12,15 @@ const FileUpload = ({
   fileName,
   validationError,
   index,
+  setUserInputs,
+  userInputs,
 }) => {
   return (
     <main>
       <section
         className="upload-form"
         onClick={() => {
-          document.querySelector(".input-field").click();
+          document.querySelector("#" + fieldName).click();
         }}
       >
         <input
@@ -26,31 +28,32 @@ const FileUpload = ({
           id={fieldName}
           required={true}
           onChange={(event) => {
-            console.log(event)
-            onUpload(event);
+            console.log(event);
+            onUpload(event, fieldName, index);
           }}
           className="input-field"
           hidden
         />
         {selectedFile ? (
-          <FaRegFilePdf size={60} />
+          <FaRegFilePdf size={60} color="#4c6688" />
         ) : (
           <>
-            <MdCloudUpload color="#00bdf0" size={60} />
-            <p>Browse Files</p>
+            <MdCloudUpload color="#4c6688" size={60} />
+            <p style={{color: "#4c6688"}}>Browse Files</p>
           </>
         )}
       </section>
       <section className="uploaded-row">
-        <AiFillFileImage color="#00bdf0" />
         <span className="upload-content">
-          {fileName} -
-          <MdDelete
-            onClick={() => {}}
-            size={20}
-            color="red"
-            cursor={"pointer"}
-          />
+          <p>{fileName ?? "No File Uploaded"}</p>
+        </span>
+        <span
+          className={fileName ? "delete-section":"delete-section-disabled"}
+          onClick={() => {
+            setUserInputs({ ...userInputs, [fieldName]: null });
+          }}
+        >
+          <MdDelete size={20} color="white" />
         </span>
       </section>
       {validationError && <p style={{ color: "red" }}>{errorMessage}</p>}
