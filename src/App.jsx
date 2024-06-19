@@ -85,6 +85,8 @@ const App = () => {
       amount: 499,
     },
   });
+  
+  const [fileValidations, setFileValidations] = useState([false, false])
 
   const getFullAddress = () => {
     return `${userInputs.address.addressLine1}, ${userInputs.address.city}, ${userInputs.address.region}, ${userInputs.address.country}, ${userInputs.address.postCode}`;
@@ -119,15 +121,45 @@ const App = () => {
     setUserInputs({ ...userInputs, phone: value });
   };
 
-  const handleProofOfAddressChange = (file) => {
-    console.log("ur mum");
-    setUserInputs({ ...userInputs, proofOfAddress: file });
-  };
+  const handleFileChangeAddress = (event) => {
+    console.log("j'address")
+    const file = event.target.files[0];
+    if (["application/pdf"].includes(file.type)) {
+      setUserInputs({ ...userInputs, "proofOfAddress": file});
+      setFileValidations(prevValidations => {
+        const newValidations = [...prevValidations]; 
+        newValidations[0] = false;            
+        return newValidations;                     
+      });
+    } else {
+      setUserInputs({ ...userInputs, "proofOfAddress": null});
+      setFileValidations(prevValidations => {
+        const newValidations = [...prevValidations]; 
+        newValidations[0] = true;            
+        return newValidations;                     
+      });
+    }
+  }
 
-  const handleProofOfIncomeChange = (file) => {
-    console.log("ur da");
-    setUserInputs({ ...userInputs, proofOfIncome: file });
-  };
+  const handleFileChangeIncome = (event, index, fieldName) => {
+    console.log("j'income")
+    const file = event.target.files[0];
+    if (["application/pdf"].includes(file.type)) {
+      setUserInputs({ ...userInputs, "proofOfIncome": file});
+      setFileValidations(prevValidations => {
+        const newValidations = [...prevValidations]; 
+        newValidations[1] = false;            
+        return newValidations;                     
+      });
+    } else {
+      setUserInputs({ ...userInputs, "proofOfIncome": null});
+      setFileValidations(prevValidations => {
+        const newValidations = [...prevValidations]; 
+        newValidations[1] = true;            
+        return newValidations;                     
+      });
+    }
+  }
 
   const handleValueChange = (value, name, values) => {
     setUserInputs({
@@ -403,12 +435,13 @@ const App = () => {
                       />
                       <FileUpload
                         acceptedTypes={["application/pdf"]}
-                        onUpload={(file) => {
-                          handleProofOfAddressChange(file)
-                        }}
+                        onUpload={handleFileChangeAddress}
                         errorMessage="Invalid file type. Please upload PDF files."
                         fieldName="proofOfAddress"
-                        uploadedFile={userInputs?.proofOfAddress}
+                        selectedFile={userInputs?.proofOfAddress}
+                        fileName={userInputs?.proofOfAddress?.name}
+                        validationError={fileValidations[0]}
+                        index={0}
                       />
                     </div>
                     <div className="form-group">
@@ -416,14 +449,15 @@ const App = () => {
                         title="Proof of Income"
                         instructions={proofOfIncomeInstructions}
                       />
-                      <FileUpload
+                      <FileUpload2
                         acceptedTypes={["application/pdf"]}
-                        onUpload={(file) => {
-                          handleProofOfIncomeChange(file)
-                        }}
+                        onUpload={handleFileChangeIncome}
                         errorMessage="Invalid file type. Please upload PDF files."
                         fieldName="proofOfIncome"
-                        uploadedFile={userInputs?.proofOfIncome}
+                        selectedFile={userInputs?.proofOfIncome}
+                        fileName={userInputs?.proofOfIncome?.name}
+                        validationError={fileValidations[1]}
+                        index={1}
                       />
                     </div>
                   </div>
