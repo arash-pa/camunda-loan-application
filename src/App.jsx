@@ -25,6 +25,7 @@ import {
   loanTypeLookup,
 } from "../data/lookupHardcode";
 import FileUpload from "./components/FileUpload";
+import FileUpload2 from "./components/FileUpload2";
 import { callCamundaWebhook } from "../data/callCamundaWebhook";
 import { uploadFileToS3 } from "./functions/apis";
 
@@ -119,15 +120,14 @@ const App = () => {
   };
 
   const handleProofOfAddressChange = (file) => {
-    console.log("ur mum")
+    console.log("ur mum");
     setUserInputs({ ...userInputs, proofOfAddress: file });
   };
-  
+
   const handleProofOfIncomeChange = (file) => {
-    console.log("ur da")
+    console.log("ur da");
     setUserInputs({ ...userInputs, proofOfIncome: file });
   };
-
 
   const handleValueChange = (value, name, values) => {
     setUserInputs({
@@ -140,7 +140,6 @@ const App = () => {
   };
 
   const today = new Date();
-  console.log(today);
 
   const eighteenYearsAgo = new Date();
   eighteenYearsAgo.setFullYear(today.getFullYear() - 18);
@@ -150,7 +149,6 @@ const App = () => {
 
   const handleSubmit = async () => {
     event.preventDefault();
-    console.log(userInputs);
     if (formRef.current.checkValidity()) {
       setIsLoading(true);
       const POAName =
@@ -197,7 +195,6 @@ const App = () => {
       setIsLoading(false);
       setFormSubmitted(true);
     } else {
-      console.log("fill in required fields");
       formRef.current.reportValidity();
     }
   };
@@ -404,27 +401,30 @@ const App = () => {
                         title="Proof of Address"
                         instructions={proofOfAddressInstructions}
                       />
-                        <FileUpload
-                          acceptedTypes={["application/pdf"]}
-                          onUpload={handleProofOfAddressChange}
-                          errorMessage="Invalid file type. Please upload PDF files."
-                          fieldName="proofOfAddress"
-                          uploadedFile={userInputs?.proofOfAddress}
-                        />
+                      <FileUpload
+                        acceptedTypes={["application/pdf"]}
+                        onUpload={(file) => {
+                          handleProofOfAddressChange(file)
+                        }}
+                        errorMessage="Invalid file type. Please upload PDF files."
+                        fieldName="proofOfAddress"
+                        uploadedFile={userInputs?.proofOfAddress}
+                      />
                     </div>
-
                     <div className="form-group">
                       <Tooltip
                         title="Proof of Income"
                         instructions={proofOfIncomeInstructions}
                       />
-                        <FileUpload
-                          acceptedTypes={["application/pdf"]}
-                          onUpload={handleProofOfIncomeChange}
-                          errorMessage="Invalid file type. Please upload PDF files."
-                          fieldName="proofOfIncome"
-                          uploadedFile={userInputs?.proofOfIncome}
-                        />
+                      <FileUpload
+                        acceptedTypes={["application/pdf"]}
+                        onUpload={(file) => {
+                          handleProofOfIncomeChange(file)
+                        }}
+                        errorMessage="Invalid file type. Please upload PDF files."
+                        fieldName="proofOfIncome"
+                        uploadedFile={userInputs?.proofOfIncome}
+                      />
                     </div>
                   </div>
                 </React.Fragment>

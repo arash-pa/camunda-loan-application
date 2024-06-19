@@ -4,7 +4,7 @@ import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage, AiFillIdcard } from "react-icons/ai";
 import { FaRegFilePdf } from "react-icons/fa";
 
-const FileUpload = ({
+const FileUpload2 = ({
   acceptedTypes,
   onUpload,
   errorMessage,
@@ -32,7 +32,7 @@ const FileUpload = ({
 
   return (
     <main>
-      <section action="" className="upload-form" onClick={(e) => {
+      <form action="" className="upload-form" onClick={(e) => {
         e.stopPropagation();
         document.querySelector(".input-field").click()
         }}>
@@ -43,7 +43,7 @@ const FileUpload = ({
       <MdCloudUpload color="#00bdf0" size={60} />
       <p>Browse Files</p>
       </>}
-      </section>
+      </form>
       <section className="uploaded-row">
         <AiFillFileImage color="#00bdf0" />
         <span className="upload-content">
@@ -63,4 +63,4 @@ const FileUpload = ({
   );
 };
 
-export default FileUpload;
+export default FileUpload2;
