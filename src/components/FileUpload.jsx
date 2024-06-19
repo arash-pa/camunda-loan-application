@@ -9,9 +9,10 @@ const FileUpload = ({
   onUpload,
   errorMessage,
   fieldName,
+  uploadedFile
 }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileName, setFileName] = useState("No File Selected")
+  const [selectedFile, setSelectedFile] = useState(uploadedFile);
+  const [fileName, setFileName] = useState(uploadedFile?.name ?? "No File Selected")
   const [validationError, setValidationError] = useState(false);
 
   const handleChange = (event) => {
@@ -21,7 +22,7 @@ const FileUpload = ({
       setSelectedFile(file);
       setFileName(file.name)
       setValidationError(false);
-      onUpload(file, fieldName); // Pass the file to the parent component
+      onUpload(file); // Pass the file to the parent component
     } else {
       setSelectedFile(null);
       setValidationError(true);
@@ -30,7 +31,10 @@ const FileUpload = ({
 
   return (
     <main>
-      <form action="" className="upload-form" onClick={() => document.querySelector(".input-field").click()}>
+      <form action="" className="upload-form" onClick={(e) => {
+        e.stopPropagation();
+        document.querySelector(".input-field").click()
+        }}>
       <input type="file" required={true} onChange={handleChange} className="input-field" hidden />
       {selectedFile ?
       <FaRegFilePdf size={60}/> :

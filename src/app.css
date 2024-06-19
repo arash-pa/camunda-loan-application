@@ -307,3 +307,8 @@ button[type="submit"] {
   opacity: 0; 
   transition: opacity 300ms ease-in-out;
 }
+
+.file-upload-section {
+  display: flex;
+  align-items: center;
+}

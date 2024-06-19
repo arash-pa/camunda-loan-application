@@ -28,9 +28,7 @@ import FileUpload from "./components/FileUpload";
 import { callCamundaWebhook } from "../data/callCamundaWebhook";
 import { uploadFileToS3 } from "./functions/apis";
 
-import {
-  createCustomerData,
-} from "./functions/builders";
+import { createCustomerData } from "./functions/builders";
 
 const App = () => {
   const formRef = useRef(null);
@@ -120,13 +118,16 @@ const App = () => {
     setUserInputs({ ...userInputs, phone: value });
   };
 
-  const handleFileUpload = (file, fieldName) => {
-    setUserInputs({ ...userInputs, [fieldName]: file });
-    console.log(userInputs);
+  const handleProofOfAddressChange = (file) => {
+    console.log("ur mum")
+    setUserInputs({ ...userInputs, proofOfAddress: file });
   };
-  const fileExtensions = {
-    accept: ".jpg, .jpeg, .png, .pdf",
+  
+  const handleProofOfIncomeChange = (file) => {
+    console.log("ur da")
+    setUserInputs({ ...userInputs, proofOfIncome: file });
   };
+
 
   const handleValueChange = (value, name, values) => {
     setUserInputs({
@@ -259,7 +260,7 @@ const App = () => {
                       <div>
                         <div className="input-line">
                           <DropdownInput
-                            label="Loan Type & Amount"
+                            label="Requested Loan"
                             name="loanType"
                             value={userInputs.loanType || ""}
                             options={loanTypeLookup}
@@ -399,27 +400,31 @@ const App = () => {
                 <React.Fragment>
                   <div className="docs-container">
                     <div className="form-group">
-                      <Tooltip title="Proof of Address" instructions={proofOfAddressInstructions} />
-                      <FileUpload
-                        acceptedTypes={[
-                          "application/pdf",
-                        ]}
-                        onUpload={handleFileUpload}
-                        errorMessage="Invalid file type. Please upload PDF files."
-                        fieldName="proofOfAddress"
+                      <Tooltip
+                        title="Proof of Address"
+                        instructions={proofOfAddressInstructions}
                       />
+                        <FileUpload
+                          acceptedTypes={["application/pdf"]}
+                          onUpload={handleProofOfAddressChange}
+                          errorMessage="Invalid file type. Please upload PDF files."
+                          fieldName="proofOfAddress"
+                          uploadedFile={userInputs?.proofOfAddress}
+                        />
                     </div>
 
                     <div className="form-group">
-                    <Tooltip title="Proof of Income" instructions={proofOfIncomeInstructions} />
-                      <FileUpload
-                        acceptedTypes={[
-                          "application/pdf",
-                        ]}
-                        onUpload={handleFileUpload}
-                        errorMessage="Invalid file type. Please upload PDF files."
-                        fieldName="proofOfIncome"
+                      <Tooltip
+                        title="Proof of Income"
+                        instructions={proofOfIncomeInstructions}
                       />
+                        <FileUpload
+                          acceptedTypes={["application/pdf"]}
+                          onUpload={handleProofOfIncomeChange}
+                          errorMessage="Invalid file type. Please upload PDF files."
+                          fieldName="proofOfIncome"
+                          uploadedFile={userInputs?.proofOfIncome}
+                        />
                     </div>
                   </div>
                 </React.Fragment>
