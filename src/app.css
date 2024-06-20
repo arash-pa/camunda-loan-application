@@ -152,7 +152,9 @@ input[type="number"] {
 .form-group input[type="number"],
 .form-group select { /* If using standard select elements */
   width: 100%; 
+  line-height: 2.5vh;
 }
+
 
 .input-line-no-label {
   display: flex; /* Use flexbox for easy alignment */
@@ -160,7 +162,6 @@ input[type="number"] {
   align-items: baseline; /* Align the label and input vertically */
   margin-bottom: 10px; /* Add some spacing between input lines */
   flex: 1;
-  height: 40px
 }
 
 .input-line-no-label > * {
@@ -168,12 +169,11 @@ input[type="number"] {
   flex-direction: column;
   align-items: baseline;
   margin-top: 25px;
+  line-height: 2.5vh;
 }
 
 .input-line-no-label input {
   flex: 1 1 50%;
-  padding-top: 8px;
-  padding-bottom: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   justify-content: flex-end;
@@ -181,6 +181,7 @@ input[type="number"] {
   background-color: #fff;
   color: #000;
   width: 70%;
+  line-height: 2.5vh;
 }
 
 .input-line {
@@ -220,7 +221,7 @@ input[type="number"] {
   margin-right: 10px;
   background-color: #fff;
   color: #000;
-  height: 30px;
+  line-height: 2.5vh;
 }
 
 .react-datepicker-wrapper {

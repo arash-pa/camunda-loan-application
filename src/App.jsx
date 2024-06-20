@@ -279,7 +279,6 @@ const App = () => {
                         </div>
                         <div className="input-line-no-label">
                           <CurrencyInput
-                            style={{ height: "40px" }}
                             id="loanAmount"
                             placeholder="Enter Loan Amount"
                             defaultValue={userInputs.loanAmount.amount}
